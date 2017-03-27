@@ -15,7 +15,7 @@ Next to the Product identifiers we have added a optimised title field so you can
 
 And your done. You will find extra fields with eacht prouct you can fill in with the right data.
 If you would like to use the fields in your theme you can retreive data with the Wordpress get_post_meta() function.
-Like: get_post_meta( get_the_ID(), '_wpmr_gtin', true ); (in this case showing the GTIN number.)
+Like: `<?php echo get_post_meta( get_the_ID(), '_wpmr_gtin', true ); ?>` (in this case showing the GTIN number.)
 
 # Change log
 = version 1.2.0 = 
