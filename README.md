@@ -14,6 +14,8 @@ step 5. .zip the file to woocommerce-additional-product-identifiers.zip
 step 6. Install the plugin in your Wordpress Woocommerce shop like an ordinary plugin. 
 
 And your done. You will find extra fields with eacht prouct you can fill in with the right data.
+If you would like to use the fields in your theme you can retreive data with the Wordpress get_post_meta() function.
+Like: <?php echo get_post_meta( get_the_ID(), '_wpmr_gtin', true ); ?> (in this case showing the GTIN number.)
 
 # Change log
 = version 1.2.0 = 
