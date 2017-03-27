@@ -6,22 +6,22 @@ This will make it easier for the customers from woocommerce product feed manager
 Next to the Product identifiers we have added a optimised title field so you can create special optimized titles to your products and use them in you feeds.
 
 # Use this plugin
-step 1. Click the green button (top right) "Clone or Download"
-step 2. Click download ZIP
-step 3. Inzip the file
-step 4. The plugin directory is named "woocommerce-additional-product-identifiers-master" Remove -master from the name
-step 5. .zip the file to woocommerce-additional-product-identifiers.zip
-step 6. Install the plugin in your Wordpress Woocommerce shop like an ordinary plugin. 
+* step 1. Click the green button (top right) "Clone or Download"
+* step 2. Click download ZIP
+* step 3. Inzip the file
+* step 4. The plugin directory is named "woocommerce-additional-product-identifiers-master" Remove -master from the name
+* step 5. .zip the file to woocommerce-additional-product-identifiers.zip
+* step 6. Install the plugin in your Wordpress Woocommerce shop like an ordinary plugin. 
 
 And your done. You will find extra fields with eacht prouct you can fill in with the right data.
 If you would like to use the fields in your theme you can retreive data with the Wordpress get_post_meta() function.
-Like: <?php echo get_post_meta( get_the_ID(), '_wpmr_gtin', true ); ?> (in this case showing the GTIN number.)
+Like: get_post_meta( get_the_ID(), '_wpmr_gtin', true ); (in this case showing the GTIN number.)
 
 # Change log
 = version 1.2.0 = 
 * Removed woocommerce version check because it was giving en E-notice and we want users to use the latest version of woocommerce any way.
 
-= version 1.1.0 = 
+= version 1.1.0 =
 * Added title field so we can use a custom/optimized title for products and product variations in the channels.
 
 = version 1.0.3 = 
