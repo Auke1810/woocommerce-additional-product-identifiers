@@ -9,28 +9,6 @@ Author URI: http://www.wpmarketingrobot.com
 Source: http://www.remicorson.com/mastering-woocommerce-products-custom-fields/
 */
 
-/*
-	= version 1.2.0 = 
-	* Removed woocommerce version check because it was giving en E-notice and we want users to use the latest version of woocommerce any way.
-	
-	= version 1.1.0 = 
-	* Added title field so we can use a custom/optimized title for products and product variations in the channels.
-	
-	= version 1.0.3 = 
-	* Solved bug with naming function redeclarition
-
-	= version 1.0.2 = 
-	* Solved bug mixing PI values
-	
-	= version 1.0.1 = 
-	* Layout bug opgelost
-	* Ondersteuning Wordpress lager dan 2.4.4
-	
-	= version 1.0.0 =
-	* Initial resease
-
-*/
-
 // Simple Product Hooks
 // Display Fields
 add_action( 'woocommerce_product_options_general_product_data', 'wpmr_custom_general_fields' );
