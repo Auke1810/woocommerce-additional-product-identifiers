@@ -18,6 +18,9 @@ If you would like to use the fields in your theme you can retreive data with the
 Like: `<?php echo get_post_meta( get_the_ID(), '_wpmr_gtin', true ); ?>` (in this case showing the GTIN number.)
 
 # Change log
+= version 1.3.0 = 
+* Added functionality so wordpress/woocommerce search will take in account the custom product fields. So now you can search on gtin, ean, brand fields etc.
+
 = version 1.2.0 = 
 * Removed woocommerce version check because it was giving en E-notice and we want users to use the latest version of woocommerce any way.
 
