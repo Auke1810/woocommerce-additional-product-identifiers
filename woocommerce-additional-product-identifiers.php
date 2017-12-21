@@ -4,7 +4,7 @@ Plugin Name: Woocommerce additional product identifier fields
 Plugin URI: http://www.wpmarketingrobot.com
 Description: This Plugin adds missing Product identifiers to Woocommerce products. It will add 4 important product identifiers Brand, MPN, UPC, EAN, GTIN to simple and variabel products required for sales channels
 Author: WPmarketingrobot, Auke1810, Michel Jongbloed
-Version: 1.2.0
+Version: 1.3.0
 Author URI: http://www.wpmarketingrobot.com
 Source: http://www.remicorson.com/mastering-woocommerce-products-custom-fields/
 */
@@ -285,4 +285,62 @@ function wpmr_save_custom_variable_fields( $post_id ) {
 		}
 		
 	}
+}
+
+// NEXT CODE IS MAKING SURE THE CUSTOM POST FIELDS CAN BE SEARCHED IN WOOCOMMERCE PRODUCT SEARCH.
+
+// hook into wp pre_get_posts
+add_action('pre_get_posts', 'jc_woo_search_pre_get_posts');
+ 
+/**
+ * Add custom join and where statements to product search query
+ * @param  mixed $q query object
+ * @return void
+ */
+function jc_woo_search_pre_get_posts($q){
+ 
+    if ( is_search() ) {
+        add_filter( 'posts_join', 'jc_search_post_join' );
+        add_filter( 'posts_where', 'jc_search_post_excerpt' );
+    }
+}
+ 
+/**
+ * Add Custom Join Code for wp_mostmeta table
+ * @param  string $join
+ * @return string
+ */
+function jc_search_post_join($join = ''){
+ 
+    global $wp_the_query;
+ 
+    // escape if not woocommerce searcg query
+    if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) )
+            return $join;
+ 
+    $join .= "INNER JOIN wp_postmeta AS jcmt1 ON (wp_posts.ID = jcmt1.post_id)";
+    return $join;
+}
+ 
+/**
+ * Add custom where statement to product search query
+ * @param  string $where
+ * @return string
+ */
+function jc_search_post_excerpt($where = ''){
+ 
+    global $wp_the_query;
+ 
+    // escape if not woocommerce search query
+    if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) )
+            return $where;
+ 
+    $where = preg_replace("/post_title LIKE ('%[^%]+%')/", "post_title LIKE $1)
+                OR (jcmt1.meta_key = '_sku' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
+                OR  (jcmt1.meta_key = '_author' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
+                OR  (jcmt1.meta_key = '_publisher' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
+                OR  (jcmt1.meta_key = '_wpmr_' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
+                OR  (jcmt1.meta_key = '_format' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1 ", $where);
+ 
+    return $where;
 }
