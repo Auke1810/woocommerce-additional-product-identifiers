@@ -289,58 +289,47 @@ function wpmr_save_custom_variable_fields( $post_id ) {
 
 // NEXT CODE IS MAKING SURE THE CUSTOM POST FIELDS CAN BE SEARCHED IN WOOCOMMERCE PRODUCT SEARCH.
 
-// hook into wp pre_get_posts
-add_action('pre_get_posts', 'jc_woo_search_pre_get_posts');
- 
-/**
- * Add custom join and where statements to product search query
- * @param  mixed $q query object
- * @return void
- */
-function jc_woo_search_pre_get_posts($q){
- 
-    if ( is_search() ) {
-        add_filter( 'posts_join', 'jc_search_post_join' );
-        add_filter( 'posts_where', 'jc_search_post_excerpt' );
+function cf_search_join( $join ) {
+    global $wpdb;
+
+    if ( is_search() ) {    
+        $join .=' LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
     }
-}
- 
-/**
- * Add Custom Join Code for wp_mostmeta table
- * @param  string $join
- * @return string
- */
-function jc_search_post_join($join = ''){
- 
-    global $wp_the_query;
- 
-    // escape if not woocommerce searcg query
-    if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) )
-            return $join;
- 
-    $join .= "INNER JOIN wp_postmeta AS jcmt1 ON (wp_posts.ID = jcmt1.post_id)";
+
     return $join;
 }
- 
+add_filter('posts_join', 'cf_search_join' );
+
 /**
- * Add custom where statement to product search query
- * @param  string $where
- * @return string
+ * Modify the search query with posts_where
+ *
+ * http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_where
  */
-function jc_search_post_excerpt($where = ''){
- 
-    global $wp_the_query;
- 
-    // escape if not woocommerce search query
-    if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) )
-            return $where;
- 
-    $where = preg_replace("/post_title LIKE ('%[^%]+%')/", "post_title LIKE $1)
-                OR (jcmt1.meta_key = '_sku' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_author' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_publisher' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_wpmr_' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1)
-                OR  (jcmt1.meta_key = '_format' AND CAST(jcmt1.meta_value AS CHAR) LIKE $1 ", $where);
- 
+function cf_search_where( $where ) {
+    global $pagenow, $wpdb;
+
+    if ( is_search() ) {
+        $where = preg_replace(
+            "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+            "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+    }
+
     return $where;
 }
+add_filter( 'posts_where', 'cf_search_where' );
+
+/**
+ * Prevent duplicates
+ *
+ * http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_distinct
+ */
+function cf_search_distinct( $where ) {
+    global $wpdb;
+
+    if ( is_search() ) {
+        return "DISTINCT";
+    }
+
+    return $where;
+}
+add_filter( 'posts_distinct', 'cf_search_distinct' );
