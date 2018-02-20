@@ -4,7 +4,7 @@ Plugin Name: Woocommerce additional product identifier fields
 Plugin URI: http://www.wpmarketingrobot.com
 Description: This Plugin adds missing Product identifiers to Woocommerce products. It will add 4 important product identifiers Brand, MPN, UPC, EAN, GTIN to simple and variabel products required for sales channels
 Author: WPmarketingrobot, Auke1810, Michel Jongbloed
-Version: 1.3.0
+Version: 1.4.0
 Author URI: http://www.wpmarketingrobot.com
 Source: http://www.remicorson.com/mastering-woocommerce-products-custom-fields/
 */
