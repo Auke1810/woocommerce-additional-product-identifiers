@@ -287,8 +287,17 @@ function wpmr_save_custom_variable_fields( $post_id ) {
 	}
 }
 
-// NEXT CODE IS MAKING SURE THE CUSTOM POST FIELDS CAN BE SEARCHED IN WOOCOMMERCE PRODUCT SEARCH.
+/**
+ * Extend WordPress search to include custom fields
+ *
+ * https://adambalee.com
+ */
 
+/**
+ * Join posts and postmeta tables
+ *
+ * http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_join
+ */
 function cf_search_join( $join ) {
     global $wpdb;
 
