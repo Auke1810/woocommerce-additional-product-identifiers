@@ -8,7 +8,7 @@ Next to the Product identifiers we have added a optimised title field so you can
 # Use this plugin
 * step 1. Click the green button (top right) "Clone or Download"
 * step 2. Click download ZIP
-* step 3. Inzip the file
+* step 3. Unzip the file
 * step 4. The plugin directory is named "woocommerce-additional-product-identifiers-master" Remove -master from the name
 * step 5. .zip the file to woocommerce-additional-product-identifiers.zip
 * step 6. Install the plugin in your Wordpress Woocommerce shop like an ordinary plugin. 
