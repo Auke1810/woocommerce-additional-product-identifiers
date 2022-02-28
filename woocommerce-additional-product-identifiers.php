@@ -342,3 +342,32 @@ function cf_search_distinct( $where ) {
     return $where;
 }
 add_filter( 'posts_distinct', 'cf_search_distinct' );
+
+/**
+ * Create shortcodes to retreive data
+ * USE: [show_gtin]
+ */
+add_shortcode('show_gtin', 'show_gtin_function');
+function show_gtin_function() {
+     return get_post_meta( $post->ID, '_wpmr_gtin', true );;
+}
+
+add_shortcode('show_brand', 'show_brand_function');
+function show_brand_function() {
+     return get_post_meta( $post->ID, '_wpmr_brand', true );;
+}
+
+add_shortcode('show_upc', 'show_upc_function');
+function show_upc_function() {
+     return get_post_meta( $post->ID, '_wpmr_upc', true );;
+}
+
+add_shortcode('show_ean', 'show_upc_function');
+function show_ean_function() {
+     return get_post_meta( $post->ID, '_wpmr_ean', true );;
+}
+
+add_shortcode('show_mpn', 'show_upc_function');
+function show_mpn_function() {
+     return get_post_meta( $post->ID, '_wpmr_mpn', true );;
+}
