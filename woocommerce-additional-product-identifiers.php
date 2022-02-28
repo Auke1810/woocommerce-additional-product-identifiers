@@ -23,6 +23,8 @@ add_action( 'woocommerce_product_after_variable_attributes', 'wpmr_custom_variab
 // Save variation fields
 add_action( 'woocommerce_save_product_variation', 'wpmr_save_custom_variable_fields', 10, 1 );
 
+global $post;
+
 function wpmr_custom_general_fields()
 {	
 	global $woocommerce, $post;
